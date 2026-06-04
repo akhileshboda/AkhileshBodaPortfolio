@@ -1,12 +1,13 @@
 import { motion } from 'motion/react';
-import { Mail, ExternalLink, FileText } from 'lucide-react';
+import { Mail, ExternalLink, FileText, Code2 } from 'lucide-react';
 import { fadeInUp, defaultViewport } from '@/utils/animations';
+import { profile } from '@/data/profile';
 
 const contactLinks = [
-  { icon: Mail, label: 'hello@akhil.dev', href: '#' },
-  { icon: ExternalLink, label: 'LinkedIn', href: '#' },
-  { icon: ExternalLink, label: 'GitHub', href: '#' },
-  { icon: FileText, label: 'Resume', href: '#' },
+  { icon: Mail, label: 'Email', href: profile.email, external: false },
+  { icon: ExternalLink, label: 'LinkedIn', href: profile.linkedin, external: true },
+  { icon: Code2, label: 'GitHub', href: profile.github, external: true },
+  { icon: FileText, label: 'Resume', href: profile.resume, external: false },
 ];
 
 const Contact = () => {
@@ -41,35 +42,22 @@ const Contact = () => {
           viewport={defaultViewport}
           className="flex flex-wrap justify-center gap-6 mt-10"
         >
-          {contactLinks.map(({ icon: Icon, label, href }) => (
-            <a
+          {contactLinks.map(({ icon: Icon, label, href, external }) => (
+            <motion.a
               key={label}
               href={href}
-              target="_blank"
-              rel="noopener noreferrer"
+              target={external ? '_blank' : undefined}
+              rel={external ? 'noopener noreferrer' : undefined}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
               className="flex items-center gap-2 text-slate-400 hover:text-slate-100 transition-colors duration-200 cursor-pointer"
             >
               <Icon className="w-4 h-4" />
               <span className="text-sm">{label}</span>
-            </a>
+            </motion.a>
           ))}
         </motion.div>
 
-        {/* Footer */}
-        <motion.footer
-          variants={fadeInUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={defaultViewport}
-          className="mt-20 pt-8 border-t border-white/[0.06] text-center"
-        >
-          <p className="text-sm text-slate-600">
-            &copy; 2025 Akhil. Built with intention.
-          </p>
-          <p className="text-xs text-slate-700 mt-2">
-            React · TypeScript · Tailwind CSS · Motion
-          </p>
-        </motion.footer>
       </div>
     </section>
   );

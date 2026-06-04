@@ -42,6 +42,13 @@ export const timelineEvents: TimelineEvent[] = [
     category: 'experience',
   },
   {
+    year: '2024–2025',
+    title: 'Purdue University Exchange',
+    description:
+      'An academic exchange at Purdue University that broadened my frame of reference across technology culture, systems thinking, and independent living. Clarified my interest in U.S. graduate study and product-focused software development.',
+    category: 'experience',
+  },
+  {
     year: '2024',
     title: 'AkhilOS & Homelab Experimentation',
     description:

@@ -6,7 +6,7 @@ const infoItems = [
   {
     icon: GraduationCap,
     label: 'Currently',
-    value: 'B.IT Cybersecurity, Monash University',
+    value: 'Bach IT · Cybersecurity, Monash University',
   },
   {
     icon: Crosshair,
