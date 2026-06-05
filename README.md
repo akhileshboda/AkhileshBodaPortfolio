@@ -29,6 +29,28 @@ npm run build
 npm run preview
 ```
 
+## Deploying to Raspberry Pi
+
+Deployments build the Vite site locally, sync the `dist/` output to the Pi, and run it as a PM2 static SPA process.
+
+Prerequisites:
+
+- SSH access to the Raspberry Pi
+- `rsync` available locally and on the Pi
+- PM2 installed on the Pi and available to the deploy user
+
+```bash
+DEPLOY_USER=<ssh-user> DEPLOY_HOST=<pi-host-or-ip> npm run deploy:pi
+```
+
+Optional overrides:
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `APP_NAME` | `akhilesh-portfolio` | PM2 process name |
+| `DEPLOY_PATH` | `/var/www/akhilesh-portfolio` | Remote directory that receives `dist/` |
+| `PORT` | `3000` | First port to try; the script uses the next available port if this one is busy |
+
 ## Project Structure
 
 ```
