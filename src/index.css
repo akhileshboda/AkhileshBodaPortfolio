@@ -56,13 +56,13 @@ body {
   padding-top: 2.5rem; /* ~pt-10 */
 }
 
-/* Tablet / Desktop: vertically center the content block */
+/* Tablet / Desktop: top-align with the sidebar nav (pt-8 = 32px, matching ChapterNav's pt-8) */
 @media (min-width: 768px) {
   .hero-content {
-    padding-top: 0;
-    margin-top: auto;
-    margin-bottom: auto;
-    align-self: flex-start; /* prevent stretch; let natural height set so my-auto centers correctly */
+    padding-top: 2rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    align-self: flex-start;
   }
 }
 

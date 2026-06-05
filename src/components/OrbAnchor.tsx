@@ -29,7 +29,7 @@ function OrbAnchor() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute right-[2vw] top-1/2 z-0 hidden -translate-y-1/2 md:block"
+      className="pointer-events-none absolute right-[2vw] top-8 z-0 hidden md:block"
     >
       <div className="relative aspect-square w-[clamp(340px,38vw,600px)]">
         {/* Rotating rings + nodes */}
