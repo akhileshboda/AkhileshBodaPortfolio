@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react';
 import { FileText, Mail } from 'lucide-react';
 import type { ComponentType } from 'react';
-import abLogo from '@/assets/ab-logo.png';
+import logo from '@/assets/logo.png';
 import { profile } from '@/data/profile';
 
 /* ── Inline brand icons (no extra dependency) ──────────────────── */
@@ -46,84 +46,43 @@ const labelVariants = {
 
 const labelTransition = { duration: 0.18, ease: 'easeOut' as const };
 
+const logoSizing = {
+  button: 52,
+  stage: 44,
+  image: 100,
+};
+
+const logoPulse = {
+  scale: 1.08,
+  minOpacity: 0.92,
+  duration: 2.4,
+};
+
 function AnimatedLogo() {
   const reduce = useReducedMotion();
 
   return (
-    <span className="pointer-events-none absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center">
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 56 56"
-        className="absolute inset-0 h-full w-full overflow-visible"
-      >
-        <defs>
-          <linearGradient id="header-logo-orbit" x1="9" y1="8" x2="48" y2="49" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#38d6ff" />
-            <stop offset="0.58" stopColor="#2f80ff" />
-            <stop offset="1" stopColor="#a855f7" />
-          </linearGradient>
-          <filter id="header-logo-orbit-glow" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="1.1" result="blur" />
-            <feColorMatrix
-              in="blur"
-              type="matrix"
-              values="0 0 0 0 0.22 0 0 0 0 0.84 0 0 0 0 1 0 0 0 0.65 0"
-              result="glow"
-            />
-            <feMerge>
-              <feMergeNode in="glow" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        <circle
-          cx="28"
-          cy="28"
-          r="25"
-          fill="none"
-          stroke="url(#header-logo-orbit)"
-          strokeWidth="0.9"
-          opacity="0.42"
-          filter="url(#header-logo-orbit-glow)"
-        />
-        <circle
-          cx="28"
-          cy="28"
-          r="20.5"
-          fill="none"
-          stroke="rgba(148, 163, 184, 0.32)"
-          strokeDasharray="1 4"
-          strokeLinecap="round"
-          strokeWidth="0.85"
-        />
-      </svg>
-
-      <motion.span
-        aria-hidden="true"
-        className="absolute inset-0 rounded-full"
-        style={{ originX: 0.5, originY: 0.5 }}
-        animate={reduce ? undefined : { rotate: 360 }}
-        transition={
-          reduce
-            ? undefined
-            : { duration: 90, repeat: Infinity, ease: 'linear' }
-        }
-      >
-        <span
-          className="absolute right-0 top-1/2 h-2 w-2 -translate-y-1/2 rounded-full shadow-[0_0_12px_rgba(56,214,255,0.95),0_0_22px_rgba(168,85,247,0.38)]"
-          style={{
-            background:
-              'radial-gradient(circle at 32% 28%, #f8fbff 0%, #a7f3ff 22%, #38d6ff 44%, #2f80ff 68%, #7c3aed 100%)',
-          }}
-        />
-      </motion.span>
-
-      <img
-        src={abLogo}
+    <span
+      className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center"
+      style={{ width: logoSizing.stage, height: logoSizing.stage }}
+    >
+      <motion.img
+        src={logo}
         alt=""
         aria-hidden="true"
         draggable="false"
-        className="relative h-8 w-8 select-none object-contain drop-shadow-[0_0_10px_rgba(56,214,255,0.7)]"
+        className="relative select-none object-contain drop-shadow-[0_0_10px_rgba(56,214,255,0.7)]"
+        style={{ width: logoSizing.image, height: logoSizing.image }}
+        animate={
+          reduce
+            ? undefined
+            : { scale: [1, logoPulse.scale, 1], opacity: [logoPulse.minOpacity, 1, logoPulse.minOpacity] }
+        }
+        transition={
+          reduce
+            ? undefined
+            : { duration: logoPulse.duration, repeat: Infinity, ease: 'easeInOut' }
+        }
       />
     </span>
   );
@@ -193,7 +152,8 @@ function TopUtilityBar() {
           href="#hero"
           onClick={scrollToTop}
           aria-label="Back to top"
-          className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-purple-500/10 shadow-[0_0_20px_-4px_rgba(47,128,255,0.5)] transition-colors duration-200 hover:border-blue-500/50 cursor-pointer"
+          className="relative flex shrink-0 items-center justify-center rounded-full border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-purple-500/10 shadow-[0_0_20px_-4px_rgba(47,128,255,0.5)] transition-colors duration-200 hover:border-blue-500/50 cursor-pointer"
+          style={{ width: logoSizing.button, height: logoSizing.button }}
         >
           <AnimatedLogo />
         </a>

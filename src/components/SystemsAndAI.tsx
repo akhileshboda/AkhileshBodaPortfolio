@@ -1,5 +1,6 @@
-import { motion } from 'motion/react';
-import { fadeInUp, defaultViewport } from '@/utils/animations';
+import { useState, useEffect } from 'react';
+import { motion, useReducedMotion } from 'motion/react';
+import { fadeInUp, staggerContainer, defaultViewport } from '@/utils/animations';
 
 const akhilosFeatures = [
   'Custom workflow automation',
@@ -16,6 +17,31 @@ const aiItems = [
 ];
 
 export default function SystemsAndAI() {
+  const reduceMotion = useReducedMotion();
+  const [typedText, setTypedText] = useState('');
+  const fullText = '~/akhilos $';
+
+  useEffect(() => {
+    let timeout: ReturnType<typeof setTimeout>;
+    let currentIndex = 0;
+    
+    const typeNextChar = () => {
+      if (currentIndex < fullText.length) {
+        setTypedText(fullText.slice(0, currentIndex + 1));
+        currentIndex++;
+        timeout = setTimeout(typeNextChar, 100);
+      }
+    };
+
+    // Start typing after a short delay
+    const startTimeout = setTimeout(typeNextChar, 500);
+
+    return () => {
+      clearTimeout(timeout);
+      clearTimeout(startTimeout);
+    };
+  }, []);
+
   return (
     <section id="systems" className="bg-[#111118]/50 py-24 md:py-32">
       <div className="mx-auto max-w-6xl px-6">
@@ -43,24 +69,32 @@ export default function SystemsAndAI() {
             initial="hidden"
             whileInView="visible"
             viewport={defaultViewport}
-            className="rounded-2xl border border-white/[0.06] bg-[#16161D] p-8"
+            whileHover={reduceMotion ? undefined : { y: -2 }}
+            className="group relative rounded-2xl border border-white/[0.06] bg-[#16161D] p-8 overflow-hidden transition-colors duration-300 hover:border-emerald-500/30 hover:bg-[#1a1c23]"
           >
-            {/* Terminal header */}
-            <p className="font-mono text-sm text-emerald-400">
-              ~/akhilos $
-              <motion.span
-                className="ml-1 inline-block h-4 w-2 bg-emerald-400"
-                animate={{ opacity: [1, 0] }}
-                transition={{
-                  duration: 0.8,
-                  repeat: Infinity,
-                  repeatType: 'reverse',
-                  ease: 'easeInOut',
-                }}
-              />
-            </p>
+            {/* Background subtle terminal glow */}
+            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-emerald-500/5 blur-[100px] transition-opacity duration-300 group-hover:bg-emerald-500/10" />
 
-            <h3 className="mt-4 text-2xl font-bold text-slate-100">AkhilOS</h3>
+            {/* Terminal header */}
+            <div className="flex items-center">
+              <p className="font-mono text-sm text-emerald-400">
+                {typedText}
+                <motion.span
+                  className="ml-1 inline-block h-4 w-2 bg-emerald-400 align-middle"
+                  animate={{ opacity: [1, 0] }}
+                  transition={{
+                    duration: 0.8,
+                    repeat: Infinity,
+                    repeatType: 'reverse',
+                    ease: 'easeInOut',
+                  }}
+                />
+              </p>
+            </div>
+
+            <h3 className="mt-4 text-2xl font-bold text-slate-100 transition-colors duration-300 group-hover:text-emerald-400">
+              AkhilOS
+            </h3>
 
             <p className="mt-3 text-sm leading-relaxed text-slate-400">
               A Raspberry Pi-powered personal command center designed for
@@ -69,14 +103,24 @@ export default function SystemsAndAI() {
             </p>
 
             {/* Feature list */}
-            <ul className="mt-6 space-y-3">
+            <motion.ul 
+              className="mt-6 space-y-3"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={defaultViewport}
+            >
               {akhilosFeatures.map((feature) => (
-                <li key={feature} className="flex items-center gap-3">
-                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
-                  <span className="text-sm text-slate-400">{feature}</span>
-                </li>
+                <motion.li 
+                  key={feature} 
+                  variants={fadeInUp}
+                  className="flex items-center gap-3"
+                >
+                  <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(16,185,129,0.5)]" />
+                  <span className="text-sm text-slate-400 transition-colors duration-200 group-hover:text-slate-300">{feature}</span>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
           </motion.div>
 
           {/* Right — AI & Experimentation */}
@@ -98,21 +142,29 @@ export default function SystemsAndAI() {
             </p>
 
             {/* 2x2 grid */}
-            <div className="mt-6 grid grid-cols-2 gap-4">
+            <motion.div 
+              className="mt-6 grid grid-cols-2 gap-4"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={defaultViewport}
+            >
               {aiItems.map((item) => (
-                <div
+                <motion.div
                   key={item.title}
-                  className="rounded-xl border border-white/[0.06] bg-[#0A0A0F] p-4"
+                  variants={fadeInUp}
+                  whileHover={reduceMotion ? undefined : { y: -2, scale: 1.02 }}
+                  className="group/item cursor-default rounded-xl border border-white/[0.06] bg-[#0A0A0F] p-4 transition-all duration-300 hover:border-blue-500/30 hover:bg-[#12121a] hover:shadow-[0_0_20px_rgba(59,130,246,0.1)]"
                 >
-                  <h4 className="text-sm font-semibold text-slate-200">
+                  <h4 className="text-sm font-semibold text-slate-200 transition-colors duration-200 group-hover/item:text-blue-400">
                     {item.title}
                   </h4>
-                  <p className="mt-1 text-xs text-slate-500">
+                  <p className="mt-1 text-xs text-slate-500 transition-colors duration-200 group-hover/item:text-slate-400">
                     {item.description}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>

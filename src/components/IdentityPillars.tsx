@@ -1,8 +1,10 @@
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { staggerContainer, fadeInUp, defaultViewport } from '@/utils/animations';
 import { identityPillars } from '@/data/skills';
 
 function IdentityPillars() {
+  const reduceMotion = useReducedMotion();
+
   return (
     <section id="pillars" className="py-24 md:py-32 bg-[#111118]/50">
       <div className="mx-auto max-w-6xl px-6">
@@ -37,20 +39,28 @@ function IdentityPillars() {
               <motion.article
                 key={pillar.title}
                 variants={fadeInUp}
-                className="group rounded-2xl border border-white/[0.06] bg-[#16161D] p-6 card-glow cursor-pointer"
+                whileHover={reduceMotion ? undefined : { y: -4 }}
+                className="group relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#16161D] p-6 cursor-default transition-all duration-300 hover:border-blue-500/30 hover:bg-[#1a1a24]"
               >
+                {/* Background ambient hover glow */}
+                <div className="pointer-events-none absolute -top-16 -right-16 h-32 w-32 rounded-full bg-blue-500/0 blur-[50px] transition-all duration-500 group-hover:bg-blue-500/10" />
+
                 {/* Icon */}
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 transition-colors duration-200 group-hover:bg-blue-500/15">
+                <motion.div 
+                  className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-blue-500/10 border border-white/[0.02] shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-colors duration-300 group-hover:bg-blue-500/20 group-hover:border-blue-500/20"
+                  whileHover={reduceMotion ? undefined : { rotate: 5, scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                >
                   <Icon className="h-6 w-6 text-blue-400" />
-                </div>
+                </motion.div>
 
                 {/* Title */}
-                <h3 className="text-lg font-semibold text-slate-100">
+                <h3 className="text-lg font-semibold text-slate-100 transition-colors duration-200 group-hover:text-blue-400">
                   {pillar.title}
                 </h3>
 
                 {/* Description */}
-                <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+                <p className="mt-2 text-sm text-slate-400 leading-relaxed transition-colors duration-200 group-hover:text-slate-300">
                   {pillar.description}
                 </p>
               </motion.article>
