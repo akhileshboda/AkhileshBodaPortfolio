@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 // Portfolio sections
 import Hero from '@/components/Hero';
 import OriginStory from '@/components/OriginStory';
-import IdentityPillars from '@/components/IdentityPillars';
+import PillarsOfPractice from '@/components/PillarsOfPractice';
 import ExperienceAIVA from '@/components/ExperienceAIVA';
 import PurdueExchange from '@/components/PurdueExchange';
 import Projects from '@/components/Projects';
@@ -42,7 +42,7 @@ function PortfolioPage() {
       <main className="lg:pl-60 pt-[60px]">
         <Hero />
         <OriginStory />
-        <IdentityPillars />
+        <PillarsOfPractice />
         <ExperienceAIVA />
         <PurdueExchange />
         <Projects />

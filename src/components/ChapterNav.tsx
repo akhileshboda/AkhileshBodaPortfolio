@@ -11,7 +11,7 @@ interface Chapter {
 
 const chapters: Chapter[] = [
   { number: '01', label: 'Origin', id: 'about' },
-  { number: '02', label: 'What I Bring', id: 'pillars' },
+  { number: '02', label: 'Pillars', id: 'pillars' },
   { number: '03', label: 'AIVA', id: 'experience' },
   { number: '04', label: 'Purdue', id: 'purdue' },
   { number: '05', label: 'Projects', id: 'projects' },

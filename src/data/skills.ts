@@ -8,50 +8,51 @@ import {
   Target,
 } from 'lucide-react';
 
-/* ========== IDENTITY PILLARS ========== */
+/* ========== PILLARS OF PRACTICE ========== */
 
-export interface IdentityPillar {
+export interface Pillar {
+  number: string;
   icon: LucideIcon;
   title: string;
-  description: string;
+  copy: string;
 }
 
-export const identityPillars: IdentityPillar[] = [
+export const pillars: Pillar[] = [
   {
+    number: '01',
     icon: Layers,
     title: 'Product-Focused Developer',
-    description:
-      'I think in terms of users, outcomes, and shipped value — not just features and tickets.',
+    copy: 'I build for users, outcomes, and shipped value — not just features and tickets.',
   },
   {
+    number: '02',
     icon: Smartphone,
     title: 'Mobile App Builder',
-    description:
-      'Native iOS, Android, and cross-platform development with a focus on clean, intuitive mobile experiences.',
+    copy: 'Native iOS, Android, and cross-platform experiences with clean, intuitive interaction.',
   },
   {
+    number: '03',
     icon: ShieldCheck,
     title: 'Secure Development Thinker',
-    description:
-      'A cybersecurity major informs how I approach trust, privacy, threat modelling, and resilient system design.',
+    copy: 'A cybersecurity foundation shapes how I think about privacy, threat modelling, and resilient systems.',
   },
   {
+    number: '04',
     icon: Server,
     title: 'Systems Prototyper',
-    description:
-      'Homelabs, Raspberry Pi projects, and custom infrastructure — I build practical systems from scratch.',
+    copy: 'From homelabs to practical infrastructure, I build systems from scratch and iterate toward usefulness.',
   },
   {
+    number: '05',
     icon: BrainCircuit,
     title: 'AI-Forward Builder',
-    description:
-      'Agentic AI, local LLMs, and AI-assisted development workflows integrated into how I prototype and ship.',
+    copy: 'Agentic AI, local LLMs, and AI-assisted workflows are part of how I prototype and ship.',
   },
   {
+    number: '06',
     icon: Target,
     title: 'Disciplined Operator',
-    description:
-      'National-level athletics built consistency, resilience, and the ability to execute under sustained pressure.',
+    copy: 'Athletic discipline shaped my consistency, resilience, and ability to execute under pressure.',
   },
 ];
 
