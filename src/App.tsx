@@ -8,7 +8,7 @@ import Footer from '@/components/Footer';
 
 // Portfolio sections
 import Hero from '@/components/Hero';
-import AboutStory from '@/components/AboutStory';
+import OriginStory from '@/components/OriginStory';
 import IdentityPillars from '@/components/IdentityPillars';
 import ExperienceAIVA from '@/components/ExperienceAIVA';
 import PurdueExchange from '@/components/PurdueExchange';
@@ -41,7 +41,7 @@ function PortfolioPage() {
       {/* Main content — offset right of chapter nav on desktop, below utility bar */}
       <main className="lg:pl-60 pt-[60px]">
         <Hero />
-        <AboutStory />
+        <OriginStory />
         <IdentityPillars />
         <ExperienceAIVA />
         <PurdueExchange />

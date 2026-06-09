@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
-import { BookOpen, X } from 'lucide-react';
+import { BookOpen, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { getFallbackQuotes, getGeminiQuotes } from '@/utils/geminiQuotes';
 
 interface Chapter {
   number: string;
@@ -26,6 +27,124 @@ function scrollToSection(id: string) {
   if (el) {
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+}
+
+function QuoteCarousel() {
+  const reduce = useReducedMotion();
+  const [quotes, setQuotes] = useState<string[]>(() => getFallbackQuotes());
+  const [activeQuote, setActiveQuote] = useState(0);
+  const [direction, setDirection] = useState(1);
+
+  useEffect(() => {
+    let mounted = true;
+
+    getGeminiQuotes()
+      .then((generatedQuotes) => {
+        if (!mounted) return;
+        setQuotes(generatedQuotes);
+        setActiveQuote(0);
+      })
+      .catch((error) => {
+        if (!mounted) return;
+        console.warn('Gemini quotes unavailable; using rotating fallback quotes.', error);
+        setQuotes(getFallbackQuotes());
+      });
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const showPrevious = () => {
+    setDirection(-1);
+    setActiveQuote((current) => (current - 1 + quotes.length) % quotes.length);
+  };
+
+  const showNext = () => {
+    setDirection(1);
+    setActiveQuote((current) => (current + 1) % quotes.length);
+  };
+
+  const showQuote = (index: number) => {
+    setDirection(index > activeQuote ? 1 : -1);
+    setActiveQuote(index);
+  };
+
+  return (
+    <div className="absolute bottom-10 left-8 max-w-[180px]">
+      <span className="block font-mono text-3xl leading-none text-blue-400/60">
+        &ldquo;
+      </span>
+
+      <div className="mt-1 min-h-[64px] overflow-hidden" aria-live="polite">
+        <AnimatePresence mode="wait" initial={false} custom={direction}>
+          <motion.p
+            key={quotes[activeQuote]}
+            custom={direction}
+            initial={reduce ? false : { x: direction * 14, opacity: 0 }}
+            animate={reduce ? undefined : { x: 0, opacity: 1 }}
+            exit={reduce ? undefined : { x: direction * -14, opacity: 0 }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
+            className="font-mono text-[11px] leading-relaxed text-slate-500"
+          >
+            {quotes[activeQuote]}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+
+      <div className="mt-3 flex items-center justify-between">
+        <div className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={showPrevious}
+            aria-label="Previous Gemini quote"
+            className="flex h-6 w-6 items-center justify-center rounded-full border border-white/[0.08] text-slate-500 transition-colors duration-150 hover:border-blue-400/35 hover:bg-white/[0.04] hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50"
+          >
+            <ChevronLeft className="h-3.5 w-3.5" />
+          </button>
+          <button
+            type="button"
+            onClick={showNext}
+            aria-label="Next Gemini quote"
+            className="flex h-6 w-6 items-center justify-center rounded-full border border-white/[0.08] text-slate-500 transition-colors duration-150 hover:border-blue-400/35 hover:bg-white/[0.04] hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50"
+          >
+            <ChevronRight className="h-3.5 w-3.5" />
+          </button>
+        </div>
+
+        <div className="flex items-center gap-1.5" aria-label="Gemini quote pages">
+          {quotes.map((quote, index) => {
+            const selected = activeQuote === index;
+            return (
+              <button
+                key={quote}
+                type="button"
+                onClick={() => showQuote(index)}
+                aria-label={`Show Gemini quote ${index + 1}`}
+                aria-current={selected ? 'true' : undefined}
+                className={`h-1.5 rounded-full transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/50 ${
+                  selected ? 'w-4 bg-blue-400/80' : 'w-1.5 bg-slate-700 hover:bg-slate-500'
+                }`}
+              />
+            );
+          })}
+        </div>
+      </div>
+
+      <span
+        className="mt-3 block text-[9px] font-medium uppercase tracking-[0.12em] text-transparent"
+        style={{
+          fontFamily: 'var(--font-heading)',
+          backgroundImage: 'linear-gradient(100deg, #38D6FF 0%, #2F80FF 48%, #A78BFA 100%)',
+          WebkitBackgroundClip: 'text',
+          backgroundClip: 'text',
+        }}
+      >
+        Powered by Gemini
+      </span>
+      <span className="mt-2 block h-px w-8 bg-blue-500/60" />
+    </div>
+  );
 }
 
 /* ─── Desktop Side Nav ──────────────────────────────────────────── */
@@ -99,16 +218,8 @@ function DesktopChapterNav({ active }: { active: string }) {
         </ul>
       </div>
 
-      {/* Quote block — lower left */}
-      <div className="absolute bottom-10 left-8 max-w-[180px]">
-        <span className="block font-mono text-3xl leading-none text-blue-400/60">
-          &ldquo;
-        </span>
-        <p className="mt-1 font-mono text-[11px] leading-relaxed text-slate-500">
-          Empathy is the interface. Impact is the outcome.
-        </p>
-        <span className="mt-3 block h-px w-8 bg-blue-500/60" />
-      </div>
+      {/* Quote carousel — lower left */}
+      <QuoteCarousel />
     </motion.nav>
   );
 }
