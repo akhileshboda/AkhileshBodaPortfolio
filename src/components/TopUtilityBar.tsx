@@ -88,6 +88,35 @@ function AnimatedLogo() {
   );
 }
 
+function BrandIdentity({ onClick }: { onClick: (e: React.MouseEvent) => void }) {
+  return (
+    <div className="flex min-w-0 items-center">
+      <a
+        href="#hero"
+        onClick={onClick}
+        aria-label={`${profile.name}, back to top`}
+        className="group flex min-w-0 shrink-0 items-center gap-3 rounded-full pr-2 transition-opacity duration-200 hover:opacity-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400/60 cursor-pointer sm:pr-4"
+      >
+        <span
+          className="relative flex shrink-0 items-center justify-center rounded-full border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-purple-500/10 shadow-[0_0_20px_-4px_rgba(47,128,255,0.5)] transition-colors duration-200 group-hover:border-blue-500/50"
+          style={{ width: logoSizing.button, height: logoSizing.button }}
+        >
+          <AnimatedLogo />
+        </span>
+
+        <span className="hidden min-w-0 flex-col leading-[0.95] sm:flex">
+          <span className="truncate font-heading text-[15px] font-semibold tracking-normal text-slate-100 md:text-base">
+            {profile.name}
+          </span>
+          <span className="mt-0.5 truncate text-[11px] font-medium tracking-normal text-slate-400 md:text-xs">
+            {profile.role}
+          </span>
+        </span>
+      </a>
+    </div>
+  );
+}
+
 function IconButton({ link }: { link: IconLink }) {
   const Icon = link.icon;
   return (
@@ -146,22 +175,19 @@ function TopUtilityBar() {
       transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
       className="fixed left-0 right-0 top-0 z-50"
     >
-      <div className="flex h-[60px] items-center justify-between px-5 sm:px-7">
-        {/* Logo / Initials */}
-        <a
-          href="#hero"
-          onClick={scrollToTop}
-          aria-label="Back to top"
-          className="relative flex shrink-0 items-center justify-center rounded-full border border-blue-500/30 bg-gradient-to-br from-blue-500/10 to-purple-500/10 shadow-[0_0_20px_-4px_rgba(47,128,255,0.5)] transition-colors duration-200 hover:border-blue-500/50 cursor-pointer"
-          style={{ width: logoSizing.button, height: logoSizing.button }}
-        >
-          <AnimatedLogo />
-        </a>
+      <div className="relative flex h-[60px] items-center px-4 sm:px-7">
+        {/* Brand identity */}
+        <BrandIdentity onClick={scrollToTop} />
 
         {/* External utility clusters */}
-        <nav aria-label="Professional links" className="flex items-center gap-2.5">
+        <nav
+          aria-label="Professional links"
+          className="absolute right-4 top-1/2 flex -translate-y-1/2 items-center gap-2.5 sm:right-7"
+        >
           <IconCluster links={cluster1} />
-          <IconCluster links={cluster2} />
+          <div className="hidden sm:block">
+            <IconCluster links={cluster2} />
+          </div>
         </nav>
       </div>
     </motion.header>

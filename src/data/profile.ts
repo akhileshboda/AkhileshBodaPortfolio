@@ -6,7 +6,8 @@ import resume from './AkhileshBoda_Resume.pdf'
 
 export const profile = {
   initials: 'AB',
-  name: 'Akhil Boda',
+  name: 'Akhilesh Boda',
+  role: 'Product Developer',
   linkedin: 'https://www.linkedin.com/in/akhileshboda',
   github: 'https://github.com/akhileshboda',
   resume: resume,
