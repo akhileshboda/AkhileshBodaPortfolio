@@ -12,6 +12,7 @@ A premium, narrative-driven single-page portfolio built as a personal autobiogra
 | **Tailwind CSS v4** | Utility-first styling |
 | **Motion** | Scroll-reveal & interaction animations |
 | **Lucide React** | SVG icon system |
+| **Firebase AI** | Gemini-powered rotating sidebar quotes |
 
 ## Getting Started
 
@@ -28,6 +29,32 @@ npm run build
 # Preview production build
 npm run preview
 ```
+
+## Firebase Setup
+
+This app uses Firebase AI to generate the rotating Gemini quotes in the chapter navigation. The runtime import expects a local file at `src/firebase.js`.
+
+`src/firebase.js` is intentionally untracked and ignored by Git. To recreate it:
+
+```bash
+cp src/firebase_example.js src/firebase.js
+```
+
+Then replace the placeholder values in `src/firebase.js` with the Firebase web app config from Firebase Console:
+
+1. Open Firebase Console.
+2. Select the portfolio project.
+3. Go to Project settings.
+4. Under Your apps, choose the web app.
+5. Copy the `firebaseConfig` values into `src/firebase.js`.
+
+The Firebase web `apiKey` is not an admin secret in the same way a private API token or service account key is. It is expected to be bundled into client-side web apps. Still, review the project configuration before deploying:
+
+- Restrict the browser API key to the app's allowed domains.
+- Enable only the Firebase/Google APIs this app needs.
+- Review Firebase AI/Gemini quotas and billing limits.
+- Enable Firebase App Check where supported.
+- Keep service account JSON files, private keys, and admin credentials out of the repo.
 
 ## Deploying to Raspberry Pi
 
@@ -74,6 +101,8 @@ src/
 │   └── skills.ts               # Identity pillars, platforms, athletics
 ├── utils/
 │   └── animations.ts           # Reusable Motion variants
+├── firebase_example.js         # Template for local Firebase config
+├── firebase.d.ts               # Types for the local Firebase module
 ├── App.tsx                     # Main application layout
 ├── main.tsx                    # React entry point
 └── index.css                   # Design system & global styles
