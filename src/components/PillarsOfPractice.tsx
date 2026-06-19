@@ -1,17 +1,9 @@
+import { useRef } from 'react';
 import { motion } from 'motion/react';
 import { fadeInUp, staggerContainer, defaultViewport } from '@/utils/animations';
-import { useSectionProgress, type ScrollOffset } from '@/hooks/useSectionProgress';
+import { usePillarProgress } from '@/hooks/usePillarProgress';
 import PillarStructure from '@/components/PillarStructure';
-
-/** scrollYProgress thresholds at which each of the six pillars activates */
-const ACTIVE_AT = [0.04, 0.21, 0.38, 0.55, 0.72, 0.89];
-
-/**
- * Offset starts early ("start 88%") so the rail begins filling as the structure
- * enters — right as Origin's path finishes ("end 62%") — leaving no dead gap
- * between the two sections' progress animations.
- */
-const OFFSET: ScrollOffset = ['start 88%', 'end 55%'];
+import PillarStarfield from '@/components/PillarStarfield';
 
 const supportingValues = [
   { label: 'USER-CENTERED', copy: 'Everything starts with real needs.' },
@@ -20,19 +12,32 @@ const supportingValues = [
 ];
 
 /**
- * Section 02 — "Pillars of Practice". A cinematic, Parthenon-inspired structure:
- * six principles arranged as temple columns that activate sequentially with
- * scroll. Reuses the Origin journey's scroll/spring pattern (via
- * useSectionProgress) and visual language so the progress reads as one
- * continuous system flowing out of section 01. Keeps id="pillars" so ChapterNav
- * scroll-spy continues to work.
+ * Section 02 — "Pillars of Practice". A cinematic, Parthenon-blueprint structure
+ * on a scroll-revealed starry-night sky: six principles as temple columns that
+ * activate sequentially with scroll. Reuses the Origin journey's scroll/spring
+ * pattern (via useSectionProgress) so the progress reads as one continuous
+ * system flowing out of section 01. Keeps id="pillars" for ChapterNav scroll-spy.
  */
 function PillarsOfPractice() {
-  const { ref, progress, activeIndex, reduce } = useSectionProgress(ACTIVE_AT, OFFSET);
+  const sectionRef = useRef<HTMLElement>(null);
+  const {
+    templeRef,
+    progress,
+    activeIndex,
+    reduce,
+    starfieldProgress,
+  } = usePillarProgress(sectionRef);
 
   return (
-    <section id="pillars" aria-labelledby="pillars-heading" className="relative py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+    <section
+      ref={sectionRef}
+      id="pillars"
+      aria-labelledby="pillars-heading"
+      className="relative overflow-hidden py-20 md:py-24 lg:py-16"
+    >
+      <PillarStarfield progress={starfieldProgress} reduce={reduce} />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
         {/* ── Identity header ──────────────────────────────────────────── */}
         <motion.div
           variants={staggerContainer}
@@ -72,8 +77,8 @@ function PillarsOfPractice() {
         </motion.div>
 
         {/* ── Connector — Origin's path arriving into the temple ───────── */}
-        <div aria-hidden="true" className="mt-12 flex justify-center md:mt-16">
-          <div className="relative h-12 w-px md:h-16">
+        <div aria-hidden="true" className="mt-8 flex justify-center md:mt-10 lg:mt-2">
+          <div className="relative h-8 w-px md:h-10 lg:h-8">
             <div className="absolute inset-0 bg-gradient-to-b from-cyan-300/70 via-blue-500/45 to-blue-500/25" />
             <span className="absolute -top-1 left-1/2 grid h-3 w-3 -translate-x-1/2 place-items-center">
               <span className="h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_8px_2px_rgba(56,214,255,0.5)]" />
@@ -89,7 +94,7 @@ function PillarsOfPractice() {
         </div>
 
         {/* ── Temple structure (scroll-tracked) ────────────────────────── */}
-        <div ref={ref} className="mt-2">
+        <div ref={templeRef} className="mt-2 lg:-mt-8 xl:-mt-10">
           <PillarStructure progress={progress} activeIndex={activeIndex} reduce={reduce} />
         </div>
 
@@ -99,11 +104,15 @@ function PillarsOfPractice() {
           initial="hidden"
           whileInView="visible"
           viewport={defaultViewport}
-          className="relative mt-14 overflow-hidden rounded-2xl border border-white/[0.08] bg-surface/40 p-6 backdrop-blur-md md:mt-16 md:p-8"
+          className="relative mt-8 overflow-hidden rounded-lg border border-cyan-200/10 bg-[linear-gradient(180deg,rgba(8,18,38,0.64),rgba(4,9,22,0.54))] p-6 backdrop-blur-sm md:mt-10 md:p-8"
         >
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
+            className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-200/30 to-transparent"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute left-8 right-8 top-3 h-px bg-gradient-to-r from-transparent via-cyan-300/12 to-transparent"
           />
           <div className="grid gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
             <div>
