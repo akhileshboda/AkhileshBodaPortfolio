@@ -1,11 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import {
-  motion,
-  useScroll,
-  useSpring,
-  useMotionValueEvent,
-  useReducedMotion,
-} from 'motion/react';
+import { motion } from 'motion/react';
+import { useSectionProgress } from '@/hooks/useSectionProgress';
 
 interface JourneyNode {
   number: string;
@@ -101,25 +96,18 @@ function MarkerCircle({
  * connector can step like a graph rather than a straight timeline.
  */
 function OriginJourneyGraph() {
-  const reduce = useReducedMotion();
-  const containerRef = useRef<HTMLDivElement>(null);
+  const {
+    ref: containerRef,
+    progress: pathLength,
+    activeIndex,
+    reduce,
+  } = useSectionProgress(ACTIVE_AT);
   const markerRefs = useRef<Array<HTMLDivElement | null>>([]);
 
   const [geo, setGeo] = useState<{ width: number; height: number; centers: Point[] }>({
     width: 0,
     height: 0,
     centers: [],
-  });
-  const [activeIndex, setActiveIndex] = useState(reduce ? journeyNodes.length - 1 : -1);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start 78%', 'end 62%'],
-  });
-  const pathLength = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    restDelta: 0.001,
   });
 
   // Measure marker centres relative to the container so the SVG path stays
@@ -145,16 +133,7 @@ function OriginJourneyGraph() {
     const ro = new ResizeObserver(measure);
     ro.observe(el);
     return () => ro.disconnect();
-  }, []);
-
-  useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    if (reduce) return;
-    let idx = -1;
-    for (let i = 0; i < ACTIVE_AT.length; i++) {
-      if (v >= ACTIVE_AT[i]) idx = i;
-    }
-    setActiveIndex(idx);
-  });
+  }, [containerRef]);
 
   const hasGeo = geo.centers.length === journeyNodes.length && geo.height > 0;
   const d = hasGeo ? buildPath(geo.centers) : '';
