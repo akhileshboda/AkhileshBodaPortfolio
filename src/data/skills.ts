@@ -1,95 +1,63 @@
 import type { LucideIcon } from 'lucide-react';
 import {
   Layers,
+  Apple,
   Smartphone,
+  TabletSmartphone,
   ShieldCheck,
-  Server,
   BrainCircuit,
-  Target,
+  Workflow,
+  Medal,
 } from 'lucide-react';
 
-/* ========== PILLARS OF PRACTICE ========== */
+/* ========== ONBOARD SYSTEMS — SKILL THEMES ========== */
 
-export interface Pillar {
-  number: string;
+export interface SkillTheme {
   icon: LucideIcon;
   title: string;
   copy: string;
 }
 
-export const pillars: Pillar[] = [
+export const skillThemes: SkillTheme[] = [
   {
-    number: '01',
     icon: Layers,
-    title: 'Product-Focused Developer',
+    title: 'Product-Focused Development',
     copy: 'I build for users, outcomes, and shipped value — not just features and tickets.',
   },
   {
-    number: '02',
+    icon: Apple,
+    title: 'Native iOS Development',
+    copy: 'Swift, SwiftUI, and UIKit — polished interactions built to Apple platform conventions.',
+  },
+  {
     icon: Smartphone,
-    title: 'Mobile App Builder',
-    copy: 'Native iOS, Android, and cross-platform experiences with clean, intuitive interaction.',
+    title: 'Native Android Development',
+    copy: 'Kotlin and Jetpack Compose with Material Design and clean architecture patterns.',
   },
   {
-    number: '03',
+    icon: TabletSmartphone,
+    title: 'Cross-Platform Mobile',
+    copy: 'Flutter for the cases where one codebase across platforms creates genuine product value.',
+  },
+  {
     icon: ShieldCheck,
-    title: 'Secure Development Thinker',
-    copy: 'A cybersecurity foundation shapes how I think about privacy, threat modelling, and resilient systems.',
+    title: 'Cybersecurity Mindset',
+    copy: 'A security major shapes how I think about privacy, threat modelling, and resilient systems.',
   },
   {
-    number: '04',
-    icon: Server,
-    title: 'Systems Prototyper',
-    copy: 'From homelabs to practical infrastructure, I build systems from scratch and iterate toward usefulness.',
-  },
-  {
-    number: '05',
     icon: BrainCircuit,
-    title: 'AI-Forward Builder',
-    copy: 'Agentic AI, local LLMs, and AI-assisted workflows are part of how I prototype and ship.',
+    title: 'AI-First Development',
+    copy: 'AI woven through ideation, prototyping, building, and debugging — judgment stays human.',
   },
   {
-    number: '06',
-    icon: Target,
-    title: 'Disciplined Operator',
-    copy: 'Athletic discipline shaped my consistency, resilience, and ability to execute under pressure.',
-  },
-];
-
-/* ========== MOBILE PLATFORMS ========== */
-
-export interface MobilePlatform {
-  platform: string;
-  subtitle: string;
-  description: string;
-  technologies: string[];
-  accent: string;
-}
-
-export const mobilePlatforms: MobilePlatform[] = [
-  {
-    platform: 'iOS',
-    subtitle: 'Native Apple Development',
-    description:
-      'Building native iOS experiences with Swift, UIKit, and SwiftUI. Focused on polished interactions, Apple design guidelines, and platform-native capabilities.',
-    technologies: ['Swift', 'SwiftUI', 'UIKit', 'CoreData', 'HealthKit'],
-    accent: 'from-blue-500 to-blue-600',
+    icon: Workflow,
+    title: 'Systems Thinking',
+    copy: 'Understanding how the pieces connect — from workflows and tooling to the infrastructure underneath.',
   },
   {
-    platform: 'Android',
-    subtitle: 'Native Android Development',
-    description:
-      'Developing modern Android applications with Kotlin and Jetpack Compose. Focused on Material Design, responsive layouts, and clean architecture patterns.',
-    technologies: ['Kotlin', 'Jetpack Compose', 'Room', 'Material Design 3'],
-    accent: 'from-emerald-500 to-emerald-600',
-  },
-  {
-    platform: 'Cross-Platform',
-    subtitle: 'Flutter & Multi-Platform',
-    description:
-      'Exploring cross-platform development with Flutter for scenarios where reaching multiple platforms from a single codebase creates genuine product value.',
-    technologies: ['Flutter', 'Dart', 'Firebase', 'Platform Channels'],
-    accent: 'from-purple-500 to-purple-600',
+    icon: Medal,
+    title: 'Athletic Discipline',
+    copy: 'Sport taught me consistency, resilience, and execution under pressure. It transfers.',
   },
 ];
 
@@ -113,7 +81,7 @@ export const athleticDisciplines: AthleticDiscipline[] = [
   {
     sport: 'Field Hockey',
     level: 'State-Level Goalkeeper',
-    attribute: 'Pressure & Split-Second Decision Making',
+    attribute: 'Pressure & Split-Second Decisions',
     description:
       'Playing goalkeeper at a state level required constant situational awareness, rapid decision-making under pressure, and the ability to absorb and redirect feedback instantly.',
   },
@@ -122,6 +90,6 @@ export const athleticDisciplines: AthleticDiscipline[] = [
     level: 'National-Level Competitor',
     attribute: 'Consistency & Long-Term Execution',
     description:
-      'Competing at a national level in natural bodybuilding demands months of disciplined preparation, precise tracking, iterative adjustment, and an unwavering commitment to process over outcome.',
+      'Competing at a national level in natural bodybuilding demands months of disciplined preparation, precise tracking, iterative adjustment, and commitment to process over outcome.',
   },
 ];

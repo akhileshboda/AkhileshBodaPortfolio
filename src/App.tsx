@@ -1,24 +1,32 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 
-// Layout components
-import BackgroundField from '@/components/BackgroundField';
-import TopUtilityBar from '@/components/TopUtilityBar';
-import ChapterNav from '@/components/ChapterNav';
-import Footer from '@/components/Footer';
+// The sky
+import GalaxyBackground from '@/galaxy/GalaxyBackground';
 
-// Portfolio sections
-import Hero from '@/components/Hero';
-import OriginStory from '@/components/OriginStory';
-import PillarsOfPractice from '@/components/PillarsOfPractice';
-import ExperienceAIVA from '@/components/ExperienceAIVA';
-import PurdueExchange from '@/components/PurdueExchange';
-import Projects from '@/components/Projects';
-import MobileDevelopment from '@/components/MobileDevelopment';
-import SystemsAndAI from '@/components/SystemsAndAI';
-import AthleticDiscipline from '@/components/AthleticDiscipline';
-import Timeline from '@/components/Timeline';
-import CurrentMission from '@/components/CurrentMission';
-import Contact from '@/components/Contact';
+// Journey systems
+import { useJourneyDriver } from '@/journey/useJourneyDriver';
+import { useKeyboardVoyage } from '@/journey/navigation';
+
+// Layout
+import TopBar from '@/components/layout/TopBar';
+import VoyageRail from '@/components/layout/VoyageRail';
+import WaypointHUD from '@/components/layout/WaypointHUD';
+import MobileVoyage from '@/components/layout/MobileVoyage';
+import Footer from '@/components/layout/Footer';
+
+// Waypoint chapters, in flight order
+import LaunchHero from '@/components/chapters/LaunchHero';
+import Origin from '@/components/chapters/Origin';
+import Transition from '@/components/chapters/Transition';
+import MonashStudies from '@/components/chapters/MonashStudies';
+import ProjectConstellations from '@/components/chapters/ProjectConstellations';
+import Hackathons from '@/components/chapters/Hackathons';
+import PurdueExchange from '@/components/chapters/PurdueExchange';
+import AIFirst from '@/components/chapters/AIFirst';
+import Athletics from '@/components/chapters/Athletics';
+import FlightLog from '@/components/chapters/FlightLog';
+import CurrentMission from '@/components/chapters/CurrentMission';
 
 // Footer pages
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
@@ -26,32 +34,36 @@ import TermsOfUse from '@/pages/TermsOfUse';
 import Accessibility from '@/pages/Accessibility';
 import Credits from '@/pages/Credits';
 
-function PortfolioPage() {
+function VoyagePage() {
+  useJourneyDriver();
+  useKeyboardVoyage();
+
   return (
-    <div className="relative min-h-screen bg-bg-primary text-text-primary">
-      {/* Fixed cinematic backdrop — starfield + ambient glow */}
-      <BackgroundField />
+    <div className="relative min-h-screen text-text-primary">
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
 
-      {/* Fixed utility bar — full width, z-50 */}
-      <TopUtilityBar />
+      {/* The Milky Way — fixed behind everything, tiered per device */}
+      <GalaxyBackground />
 
-      {/* Fixed left chapter nav (desktop) + floating mobile button */}
-      <ChapterNav />
+      <TopBar />
+      <VoyageRail />
+      <WaypointHUD />
+      <MobileVoyage />
 
-      {/* Main content — offset right of chapter nav on desktop, below utility bar */}
-      <main className="lg:pl-60 pt-[60px]">
-        <Hero />
-        <OriginStory />
-        <PillarsOfPractice />
-        <ExperienceAIVA />
+      <main id="main" className="relative pt-14">
+        <LaunchHero />
+        <Origin />
+        <Transition />
+        <MonashStudies />
+        <ProjectConstellations />
+        <Hackathons />
         <PurdueExchange />
-        <Projects />
-        <MobileDevelopment />
-        <SystemsAndAI />
-        <AthleticDiscipline />
-        <Timeline />
+        <AIFirst />
+        <Athletics />
+        <FlightLog />
         <CurrentMission />
-        <Contact />
       </main>
 
       <Footer />
@@ -59,11 +71,21 @@ function PortfolioPage() {
   );
 }
 
+/** Reset scroll when navigating between the voyage and the legal pages. */
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
-        <Route path="/" element={<PortfolioPage />} />
+        <Route path="/" element={<VoyagePage />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
         <Route path="/terms" element={<TermsOfUse />} />
         <Route path="/accessibility" element={<Accessibility />} />

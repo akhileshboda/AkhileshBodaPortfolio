@@ -5,6 +5,7 @@ export interface TimelineEvent {
   category: 'origin' | 'education' | 'project' | 'experience' | 'direction';
 }
 
+/** The flight log — every recorded burn of the voyage so far. */
 export const timelineEvents: TimelineEvent[] = [
   {
     year: 'Foundation',
@@ -14,17 +15,17 @@ export const timelineEvents: TimelineEvent[] = [
     category: 'origin',
   },
   {
-    year: '2022',
-    title: 'Transition into Information Technology',
+    year: '2023',
+    title: 'Transition into Technology',
     description:
       'Made the deliberate shift into technology, recognising that software could scale the human-centered impact I valued in care work.',
     category: 'education',
   },
   {
     year: '2023',
-    title: 'Cybersecurity Major at Monash University',
+    title: 'Monash University IT & Cybersecurity Studies',
     description:
-      'Chose cybersecurity as a major, building a mindset around secure development, threat modelling, privacy, and trust in software systems.',
+      'Began the Bachelor of Information Technology at Monash, majoring in cybersecurity — building foundations across secure development, software engineering, systems, and data.',
     category: 'education',
   },
   {
@@ -36,30 +37,30 @@ export const timelineEvents: TimelineEvent[] = [
   },
   {
     year: '2024',
-    title: 'AIVA — Product Operations',
+    title: 'Hackathon Participation',
     description:
-      'Gained hands-on exposure to product execution, stakeholder coordination, operational workflows, and product-team dynamics at AIVA.',
+      'First hackathon season — team formation, ruthless scoping, and shipping a working prototype against the clock.',
     category: 'experience',
-  },
-  {
-    year: '2024–2025',
-    title: 'Purdue University Exchange',
-    description:
-      'An academic exchange at Purdue University that broadened my frame of reference across technology culture, systems thinking, and independent living. Clarified my interest in U.S. graduate study and product-focused software development.',
-    category: 'experience',
-  },
-  {
-    year: '2024',
-    title: 'AkhilOS & Homelab Experimentation',
-    description:
-      'Built a Raspberry Pi-powered personal command center and began experimenting with local AI, automation, and systems-level tooling.',
-    category: 'project',
   },
   {
     year: '2025',
-    title: 'AI-Forward Development & Prototyping',
+    title: 'Hackathon Participation',
     description:
-      'Integrated agentic AI capabilities, local LLMs, and AI-assisted workflows into product development and rapid prototyping.',
+      'Returned sharper: faster prototyping, stronger product framing, and AI-assisted tooling folded into the build itself.',
+    category: 'experience',
+  },
+  {
+    year: 'Jan 2026',
+    title: 'Purdue University Exchange',
+    description:
+      'A study exchange in West Lafayette, Indiana — a short but meaningful chapter that broadened my technical, cultural, and professional perspective.',
+    category: 'experience',
+  },
+  {
+    year: '2026',
+    title: 'AI-First Development Approach',
+    description:
+      'Made AI a first-class part of my development workflow — for ideation, prototyping, building, debugging, and improving product velocity.',
     category: 'direction',
   },
   {

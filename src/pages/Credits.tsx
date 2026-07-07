@@ -22,6 +22,12 @@ const credits = [
     ],
   },
   {
+    category: '3D & WebGL',
+    items: [
+      { name: 'Three.js — the Milky Way voyage', url: 'https://threejs.org' },
+    ],
+  },
+  {
     category: 'Icons',
     items: [
       { name: 'Lucide React', url: 'https://lucide.dev' },
